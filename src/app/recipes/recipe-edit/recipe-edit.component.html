@@ -1,38 +1,42 @@
 <div class="row">
     <div class="col-md-12">
-        <form>
+        <form [formGroup]="formgroup">
             <div>
-                <input type="submit" name="submit" value="Save" class="btn btn-success"/>
+                <input [disabled]="!formgroup.valid" type="submit" name="submit" value="Save" class="btn btn-success"/>
                 <input type="button" name="cancel" value="Cancel" class="btn btn-danger"/>
             </div>
             <br/>
             <div class="form-group">
                 <label>Name</label>
-                <input type="text" name="name" class="form-control"/>
+                <input type="text" formControlName="name" name="name" class="form-control"/>
             </div>
 
             <div class="form-group">
                 <label>Image Path</label>
-                <input type="text" name="image_url" class="form-control"/>
+                <input type="text" formControlName="imagePath" name="image_url" class="form-control"/>
             </div>
             <div>
                 <img src="" class="img-responsive"/>
             </div>
             <div class="form-group">
                 <label>Description</label>
-                <textarea name="description" class="form-control"></textarea>
+                <textarea formControlName="description" name="description" class="form-control"></textarea>
             </div>
 
-            <div class="row">
+            <div class="row" formArrayName="ingredients">
+                <div style="margin-top: 10px;" *ngFor="let ingredientctrl of formgroup.get('ingredients').controls; let i = index" [formGroupName]="i">
                 <div class="col-md-8">
-                    <input type="text" name="ingredient" class="form-control"/>
+                    <input type="text" formControlName="name" name="ingredient" class="form-control"/>
                 </div>
                 <div class="col-md-2">
-                    <input type="number" name="amount" class="form-control"/>
+                    <input type="number" formControlName="amount" name="amount" class="form-control"/>
                 </div>
                 <div class="col-md-2">
                     <button type="button" class="btn btn-danger">X</button>
                 </div>
+            </div>
+                <hr/>
+                <button type="button" class="btn btn-success" (click)="onAddIngredient()">Add Ingredient</button>
             </div>
 
 
